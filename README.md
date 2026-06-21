@@ -53,7 +53,7 @@ All from one responsive and modern web application.
 
 # 🎥 Application Demo
 
-> Replace with your application GIF
+
 
 ```text
 assets/demo.gif
@@ -62,54 +62,26 @@ assets/demo.gif
 <img src="assets/demo.gif" alt="Demo"/>
 
 ---
-
 # 🛠️ Technology Stack
 
-<div align="center">
-
-| Backend | Frontend | Databases | Utilities |
-|----------|----------|------------|------------|
-| Python 3.11 | HTML5 | MySQL | Pandas |
-| Flask | CSS3 | MongoDB | Docker |
-| REST APIs | Responsive UI | Cassandra | CSV Processing |
-
-</div>
-
----
+| 🏷️ Layer | ⚡ Stack |
+|----------|----------|
+| 🐍 Backend | Python 3.11 • Flask • REST APIs |
+| 🎨 Frontend | HTML5 • CSS3 • Responsive Design |
+| 🗄️ Databases | MySQL • MongoDB • Cassandra |
+| 🔧 Utilities | Pandas • Docker • CSV Processing |
 
 # 🎮 Supported Operations
 
-<div align="center">
-
-## 🟢 Create
-
-<img src="https://img.shields.io/badge/CREATE-Supported-success?style=for-the-badge"/>
-
-## 🔵 Insert
-
-<img src="https://img.shields.io/badge/INSERT-Supported-blue?style=for-the-badge"/>
-
-## 🟠 Update
-
-<img src="https://img.shields.io/badge/UPDATE-Supported-orange?style=for-the-badge"/>
-
-## 🔴 Delete
-
-<img src="https://img.shields.io/badge/DELETE-Supported-red?style=for-the-badge"/>
-
-## 🟣 Fetch
-
-<img src="https://img.shields.io/badge/FETCH_DATA-Supported-purple?style=for-the-badge"/>
-
-## 🟢 Bulk Upload
-
-<img src="https://img.shields.io/badge/BULK_UPLOAD-Supported-brightgreen?style=for-the-badge"/>
-
-## 🟡 CSV Download
-
-<img src="https://img.shields.io/badge/CSV_EXPORT-Supported-yellow?style=for-the-badge"/>
-
-</div>
+| Operation | Status |
+|-----------|---------|
+| 🟢 Create | ![](https://img.shields.io/badge/CREATE-Supported-success?style=flat-square) |
+| 🔵 Insert | ![](https://img.shields.io/badge/INSERT-Supported-blue?style=flat-square) |
+| 🟠 Update | ![](https://img.shields.io/badge/UPDATE-Supported-orange?style=flat-square) |
+| 🔴 Delete | ![](https://img.shields.io/badge/DELETE-Supported-red?style=flat-square) |
+| 🟣 Fetch | ![](https://img.shields.io/badge/FETCH-Supported-purple?style=flat-square) |
+| 🟢 Bulk Upload | ![](https://img.shields.io/badge/BULK_UPLOAD-Supported-brightgreen?style=flat-square) |
+| 🟡 CSV Download | ![](https://img.shields.io/badge/CSV_EXPORT-Supported-yellow?style=flat-square) |
 
 ---
 
@@ -128,83 +100,6 @@ assets/demo.gif
 <img src="https://img.shields.io/badge/Cassandra-1287B1?style=for-the-badge&logo=apachecassandra&logoColor=white"/>
 
 </div>
-
----
-
-# 📸 Screenshots
-
-## 🏠 Dashboard
-
-<img src="assets/images/dashboard.png"/>
-
----
-
-## 🐬 MySQL Operations
-
-<img src="assets/images/mysql.png"/>
-
----
-
-## 🍃 MongoDB Operations
-
-<img src="assets/images/mongodb.png"/>
-
----
-
-## 👑 Cassandra Operations
-
-<img src="assets/images/cassandra.png"/>
-
----
-
-## 📁 Bulk Upload
-
-<img src="assets/images/bulk_upload.png"/>
-
----
-
-## 📊 Results
-
-<img src="assets/images/results.png"/>
-
----
-
-# 🌟 Features
-
-### 🐬 MySQL
-
-- Create Tables
-- Insert Records
-- Update Records
-- Delete Records
-- Bulk CSV Upload
-- CSV Export
-
----
-
-### 🍃 MongoDB
-
-- Create Collections
-- Insert Documents
-- Update Documents
-- Delete Documents
-- Bulk CSV Upload
-- CSV Export
-
----
-
-### 👑 Cassandra
-
-- Create Keyspaces
-- Create Tables
-- Insert Records
-- Update Records
-- Delete Records
-- Bulk CSV Upload
-- Fetch Records
-- CSV Export
-
----
 
 # 🏗️ System Architecture
 
@@ -270,7 +165,7 @@ database_web_app/
 ## 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/database_web_app.git
+git clone https://github.com/rajatsingh64/database_web_app.git
 
 cd database_web_app
 ```
@@ -331,13 +226,13 @@ Ensure MongoDB is running.
 Pull Cassandra Image
 
 ```bash
-docker pull cassandra
+docker pull cassandra:4.1
 ```
 
 Run Cassandra Container
 
 ```bash
-docker run --name cassandra-db -p 9042:9042 -d cassandra
+docker run --name cassandra-db -p 9042:9042 -d cassandra:4.1
 ```
 
 Check Container
@@ -362,61 +257,11 @@ Open Browser:
 http://127.0.0.1:5000
 ```
 
----
 
-# 📈 Learning Outcomes
-
-This project demonstrates:
-
-✅ Flask Development
-
-✅ Database Connectivity
-
-✅ Multi Database Architecture
-
-✅ REST API Design
-
-✅ CSV Processing
-
-✅ Docker Integration
-
-✅ Frontend Development
-
-✅ Backend Development
-
-✅ Full Stack Development
-
----
-
-# 🔮 Future Enhancements
-
-🔐 Authentication System
-
-🌙 Dark Mode
-
-📊 Dashboard Analytics
-
-📈 Query History
-
-📄 Excel Export
-
-☁️ Cloud Database Support
-
-👥 Multi User Support
-
-📉 Database Monitoring
-
----
 
 # 👨‍💻 Author
 
 ## Rajat Singh
-
-### Designed & Developed with ❤️
-
-Python • Flask • HTML • CSS • MySQL • MongoDB • Cassandra • Docker
-
----
 
 <div align="center">
 
