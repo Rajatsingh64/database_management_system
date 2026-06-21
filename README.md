@@ -137,17 +137,8 @@ database_web_app/
 │
 ├── assets/
 │   │
-│   ├── demo.gif
-│   │
-│   └── images/
-│       │
-│       ├── dashboard.png
-│       ├── mysql.png
-│       ├── mongodb.png
-│       ├── cassandra.png
-│       ├── bulk_upload.png
-│       └── results.png
-│
+│   └──demo.gif
+│  
 └── templates/
     │
     └── index.html
@@ -162,7 +153,7 @@ database_web_app/
 ## 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/rajatsingh64/database_web_app.git
+git clone https://github.com/Rajatsingh64/database_web_app.git
 
 cd database_web_app
 ```
