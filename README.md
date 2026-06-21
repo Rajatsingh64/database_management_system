@@ -71,35 +71,32 @@ assets/demo.gif
 | 🗄️ Databases | MySQL • MongoDB • Cassandra |
 | 🔧 Utilities | Pandas • Docker • CSV Processing |
 
-# 🎮 Supported Operations
+# 🎮 Operations
 
-| Operation | Status |
-|-----------|---------|
-| 🟢 Create | ![](https://img.shields.io/badge/CREATE-Supported-success?style=flat-square) |
-| 🔵 Insert | ![](https://img.shields.io/badge/INSERT-Supported-blue?style=flat-square) |
-| 🟠 Update | ![](https://img.shields.io/badge/UPDATE-Supported-orange?style=flat-square) |
-| 🔴 Delete | ![](https://img.shields.io/badge/DELETE-Supported-red?style=flat-square) |
-| 🟣 Fetch | ![](https://img.shields.io/badge/FETCH-Supported-purple?style=flat-square) |
-| 🟢 Bulk Upload | ![](https://img.shields.io/badge/BULK_UPLOAD-Supported-brightgreen?style=flat-square) |
-| 🟡 CSV Download | ![](https://img.shields.io/badge/CSV_EXPORT-Supported-yellow?style=flat-square) |
+<p align="center">
+  <img src="https://img.shields.io/badge/Create-28a745?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Insert-007bff?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Update-f39c12?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Delete-dc3545?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Fetch-6f42c1?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Bulk_Upload-20c997?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/CSV_Export-ffc107?style=for-the-badge"/>
+</p>
 
 ---
-
 # 🗄️ Supported Databases
 
 <div align="center">
 
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>
-
-<br><br>
-
-<img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white"/>
-
-<br><br>
-
-<img src="https://img.shields.io/badge/Cassandra-1287B1?style=for-the-badge&logo=apachecassandra&logoColor=white"/>
+<img src="https://img.shields.io/badge/🐬_MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>
+&nbsp;
+<img src="https://img.shields.io/badge/🍃_MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white"/>
+&nbsp;
+<img src="https://img.shields.io/badge/👑_Cassandra-1287B1?style=for-the-badge&logo=apachecassandra&logoColor=white"/>
 
 </div>
+
+---
 
 # 🏗️ System Architecture
 
