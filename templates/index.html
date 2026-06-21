@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f0f0f0;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #555;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: #e0e0e0;
+            color: #667eea;
+        }
+
+        .tab.active {
+            background: white;
+            color: #667eea;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .result-box {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .result-box.success {
+            background: #d4edda;
+            border-left-color: #28a745;
+            color: #155724;
+        }
+
+        .result-box.error {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+            color: #721c24;
+        }
+
+        .result-box pre {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .file-input {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-input input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 12px 15px;
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .file-input:hover .file-input-label {
+            border-color: #667eea;
+            background: #e8eaf6;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .tab {
+                padding: 15px 10px;
+                font-size: 0.9em;
+            }
+        }
+
+        .icon {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85em;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗄️ Database Management System</h1>
+            <p>Manage MySQL, MongoDB, and Cassandra databases with ease</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="mysql">
+                <span class="icon">🐬</span>MySQL
+            </button>
+            <button class="tab" data-tab="mongodb">
+                <span class="icon">🍃</span>MongoDB
+            </button>
+            <button class="tab" data-tab="cassandra">
+                <span class="icon">👑</span>Cassandra
+            </button>
+        </div>
+
+        <!-- MySQL Tab -->
+        <div class="tab-content active" id="mysql">
+            <h2 class="section-title">MySQL Operations</h2>
+            <form id="mysqlForm">
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="mysql_username" placeholder="root" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="mysql_password" placeholder="Enter password">
+                    </div>
+                    <div class="form-group">
+                        <label>Host</label>
+                        <input type="text" name="mysql_host" placeholder="localhost" required>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Port</label>
+                        <input type="number" name="mysql_port" placeholder="3306" value="3306" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Database Name</label>
+                        <input type="text" name="mysql_database_name" placeholder="my_database" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Operation Type</label>
+                    <select name="mysql_operation" id="mysqlOperation" onchange="toggleMySQLOperation()">
+                        <option value="create">Create Table</option>
+                        <option value="insert">Insert Data</option>
+                        <option value="update">Update Data</option>
+                        <option value="delete">Delete Data</option>
+                        <option value="bulk">Bulk Insert (CSV)</option>
+                        <option value="download">Download Table as CSV</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Table Name</label>
+                    <input type="text" name="mysql_table_name" placeholder="my_table" required>
+                </div>
+                <div class="form-group" id="mysqlQueryGroup">
+                    <label>SQL Query <span class="tooltip">ℹ️<span class="tooltip-text">Enter your SQL query here</span></span></label>
+                    <textarea name="mysql_create_query" id="mysqlQuery" placeholder="CREATE TABLE my_table (id INT PRIMARY KEY, name VARCHAR(100))"></textarea>
+                </div>
+                <div class="form-group" id="mysqlFileGroup" style="display: none;">
+                    <label>CSV File for Bulk Insert</label>
+                    <input type="file" name="mysql_file" accept=".csv" style="padding: 10px;">
+                </div>
+                <button type="submit" class="btn btn-primary">Execute MySQL Operation</button>
+            </form>
+            <div class="loading" id="mysqlLoading">
+                <div class="spinner"></div>
+                <p>Processing...</p>
+            </div>
+            <div class="result-box" id="mysqlResult"></div>
+        </div>
+
+        <!-- MongoDB Tab -->
+        <div class="tab-content" id="mongodb">
+            <h2 class="section-title">MongoDB Operations</h2>
+            <form id="mongodbForm">
+                <div class="form-group">
+                    <label>MongoDB Connection URL</label>
+                    <input type="text" name="mongo_url" placeholder="mongodb://localhost:27017" required>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Database Name</label>
+                        <input type="text" name="mongodb_database_name" placeholder="my_database" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Collection Name</label>
+                        <input type="text" name="mongodb_collection_name" placeholder="my_collection" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Operation Type</label>
+                    <select name="mongodb_operation" id="mongodbOperation" onchange="toggleMongoDBOperation()">
+                        <option value="create">Create/Insert Document</option>
+                        <option value="update">Update Document</option>
+                        <option value="delete">Delete Documents</option>
+                        <option value="bulk">Bulk Insert (CSV)</option>
+                        <option value="download">Download Collection as CSV</option>
+                    </select>
+                </div>
+                <div class="form-group" id="mongoDataGroup">
+                    <label>JSON Data <span class="tooltip">ℹ️<span class="tooltip-text">Enter JSON data to insert</span></span></label>
+                    <textarea name="mongodb_data" id="mongoData" placeholder='{"name": "John", "age": 30}'></textarea>
+                </div>
+                <div class="form-group" id="mongoUpdateGroup1" style="display: none;">
+                    <label>Filter Query (JSON)</label>
+                    <textarea name="mongdb_update_query1" placeholder='{"name": "John"}'></textarea>
+                </div>
+                <div class="form-group" id="mongoUpdateGroup2" style="display: none;">
+                    <label>Update Query (JSON)</label>
+                    <textarea name="mongodb_update_query2" placeholder='{"$set": {"age": 31}}'></textarea>
+                </div>
+                <div class="form-group" id="mongoDeleteGroup" style="display: none;">
+                    <label>Delete Query (JSON)</label>
+                    <textarea name="mongodb_delete_query" placeholder='{"age": {"$gt": 25}}'></textarea>
+                </div>
+                <div class="form-group" id="mongoFileGroup" style="display: none;">
+                    <label>CSV File for Bulk Insert</label>
+                    <input type="file" name="mongodb_file" accept=".csv" style="padding: 10px;">
+                </div>
+                <button type="submit" class="btn btn-primary">Execute MongoDB Operation</button>
+            </form>
+            <div class="loading" id="mongodbLoading">
+                <div class="spinner"></div>
+                <p>Processing...</p>
+            </div>
+            <div class="result-box" id="mongodbResult"></div>
+        </div>
+
+        <!-- Cassandra Tab -->
+        <div class="tab-content" id="cassandra">
+            <h2 class="section-title">Cassandra Operations</h2>
+            <form id="cassandraForm">
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label>Host</label>
+                        <input type="text" name="cassandra_host" placeholder="127.0.0.1" value="127.0.0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Port</label>
+                        <input type="number" name="cassandra_port" placeholder="9042" value="9042" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Keyspace Name</label>
+                        <input type="text" name="cassandra_keyspace_name" placeholder="my_keyspace" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Table Name</label>
+                    <input type="text" name="cassandra_table_name" placeholder="my_table" required>
+                </div>
+                <div class="form-group">
+                    <label>Operation Type</label>
+                    <select name="cassandra_operation" id="cassandraOperation" onchange="toggleCassandraOperation()">
+                        <option value="create">Create Table</option>
+                        <option value="insert">Insert Data</option>
+                        <option value="update">Update Data</option>
+                        <option value="delete">Delete Data</option>
+                        <option value="bulk">Bulk Insert (CSV)</option>
+                        <option value="download">Download Table as CSV</option>
+                        <option value="fetch">Fetch Data</option>
+                    </select>
+                </div>
+                <div class="form-group" id="cassandraQueryGroup">
+                    <label>CQL Query <span class="tooltip">ℹ️<span class="tooltip-text">Enter your CQL query</span></span></label>
+                    <textarea name="cassandra_create_query" id="cassandraQuery" placeholder="CREATE TABLE my_table (id UUID PRIMARY KEY, name text, age int)"></textarea>
+                </div>
+                <div class="form-group" id="cassandraFileGroup" style="display: none;">
+                    <label>CSV File for Bulk Insert</label>
+                    <input type="file" name="cassandra_file" accept=".csv" style="padding: 10px;">
+                </div>
+                <button type="submit" class="btn btn-primary">Execute Cassandra Operation</button>
+            </form>
+            <div class="loading" id="cassandraLoading">
+                <div class="spinner"></div>
+                <p>Processing...</p>
+            </div>
+            <div class="result-box" id="cassandraResult"></div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // MySQL operation toggle
+        function toggleMySQLOperation() {
+            const operation = document.getElementById('mysqlOperation').value;
+            const queryGroup = document.getElementById('mysqlQueryGroup');
+            const fileGroup = document.getElementById('mysqlFileGroup');
+            const queryTextarea = document.getElementById('mysqlQuery');
+            const fileInput = fileGroup.querySelector('input[type="file"]');
+
+            queryGroup.style.display = 'block';
+            fileGroup.style.display = 'none';
+            fileInput.required = false;
+
+            switch(operation) {
+                case 'create':
+                    queryTextarea.name = 'mysql_create_query';
+                    queryTextarea.placeholder = 'CREATE TABLE my_table (id INT PRIMARY KEY, name VARCHAR(100))';
+                    break;
+                case 'insert':
+                    queryTextarea.name = 'mysql_insert_query';
+                    queryTextarea.placeholder = 'INSERT INTO my_table (id, name) VALUES (1, "John")';
+                    break;
+                case 'update':
+                    queryTextarea.name = 'mysql_update_query';
+                    queryTextarea.placeholder = 'UPDATE my_table SET name = "Jane" WHERE id = 1';
+                    break;
+                case 'delete':
+                    queryTextarea.name = 'mysql_delete_query';
+                    queryTextarea.placeholder = 'DELETE FROM my_table WHERE id = 1';
+                    break;
+                case 'bulk':
+                    queryGroup.style.display = 'none';
+                    fileGroup.style.display = 'block';
+                    fileInput.required = true;
+                    break;
+                case 'download':
+                    queryGroup.style.display = 'none';
+                    break;
+            }
+        }
+
+        // MongoDB operation toggle
+        function toggleMongoDBOperation() {
+            const operation = document.getElementById('mongodbOperation').value;
+            const dataGroup = document.getElementById('mongoDataGroup');
+            const updateGroup1 = document.getElementById('mongoUpdateGroup1');
+            const updateGroup2 = document.getElementById('mongoUpdateGroup2');
+            const deleteGroup = document.getElementById('mongoDeleteGroup');
+            const fileGroup = document.getElementById('mongoFileGroup');
+            const fileInput = fileGroup.querySelector('input[type="file"]');
+
+            dataGroup.style.display = 'none';
+            updateGroup1.style.display = 'none';
+            updateGroup2.style.display = 'none';
+            deleteGroup.style.display = 'none';
+            fileGroup.style.display = 'none';
+            fileInput.required = false;
+
+            switch(operation) {
+                case 'create':
+                    dataGroup.style.display = 'block';
+                    break;
+                case 'update':
+                    updateGroup1.style.display = 'block';
+                    updateGroup2.style.display = 'block';
+                    break;
+                case 'delete':
+                    deleteGroup.style.display = 'block';
+                    break;
+                case 'bulk':
+                    fileGroup.style.display = 'block';
+                    fileInput.required = true;
+                    break;
+            }
+        }
+
+        // Cassandra operation toggle
+        function toggleCassandraOperation() {
+            const operation = document.getElementById('cassandraOperation').value;
+            const queryGroup = document.getElementById('cassandraQueryGroup');
+            const fileGroup = document.getElementById('cassandraFileGroup');
+            const queryTextarea = document.getElementById('cassandraQuery');
+            const fileInput = fileGroup.querySelector('input[type="file"]');
+
+            queryGroup.style.display = 'block';
+            fileGroup.style.display = 'none';
+            fileInput.required = false;
+
+            switch(operation) {
+                case 'create':
+                    queryTextarea.name = 'cassandra_create_query';
+                    queryTextarea.placeholder = 'CREATE TABLE my_table (id UUID PRIMARY KEY, name text, age int)';
+                    break;
+                case 'insert':
+                    queryTextarea.name = 'cassandra_insert_query';
+                    queryTextarea.placeholder = "INSERT INTO my_table (id, name, age) VALUES (uuid(), 'John', 30)";
+                    break;
+                case 'update':
+                    queryTextarea.name = 'cassandra_update_query';
+                    queryTextarea.placeholder = "UPDATE my_table SET age = 31 WHERE id = uuid()";
+                    break;
+                case 'delete':
+                    queryTextarea.name = 'cassandra_delete_query';
+                    queryTextarea.placeholder = "DELETE FROM my_table WHERE id = uuid()";
+                    break;
+                case 'bulk':
+                    queryTextarea.name = 'cassandra_create_query';
+                    queryTextarea.placeholder = 'CREATE TABLE passenger (...)';
+                    queryGroup.style.display = 'block';
+                    fileGroup.style.display = 'block';
+                    fileInput.required = true;
+                    break;
+                case 'download':
+                    queryGroup.style.display = 'none';
+                    break;
+                case 'fetch':
+                    queryTextarea.name = 'cassandra_fetch_query';
+                    queryTextarea.placeholder = 'SELECT * FROM my_table';
+                    break;
+            }
+        }
+
+        toggleMySQLOperation();
+        toggleMongoDBOperation();
+        toggleCassandraOperation();
+
+        // File name update
+        function updateFileName(input) {
+            const label = input.parentElement.querySelector('.file-input-label');
+            
+            if (input.files.length > 0) {
+                label.textContent = '📄 ' + input.files[0].name;
+            } else {
+                label.textContent = '📁 Choose CSV file';
+            }
+        }
+        document.getElementById('mysqlForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const loading = document.getElementById('mysqlLoading');
+        const resultBox = document.getElementById('mysqlResult');
+
+        loading.classList.add('show');
+        resultBox.classList.remove('show');
+
+        const formData = new FormData(this);
+        const operation = formData.get('mysql_operation');
+
+        try {
+            let response;
+
+            // Bulk upload always sends FormData
+            if (operation === 'bulk') {
+
+                response = await fetch('/mysql', {
+                    method: 'POST',
+                    body: formData
+                });
+
+            } else {
+
+                const data = {};
+
+                formData.forEach((value, key) => {
+                    if (!(value instanceof File)) {
+                        data[key] = value;
+                    }
+            });
+
+            response = await fetch('/mysql', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+        }
+
+        const result = await response.text();
+
+        loading.classList.remove('show');
+        resultBox.classList.add('show');
+        resultBox.className =
+            'result-box show ' +
+            (result.includes('Error') || result.includes('Traceback')
+                ? 'error'
+                : 'success');
+
+            resultBox.innerHTML = `<strong>Result:</strong><pre>${result}</pre>`;
+
+        } catch (error) {
+
+            loading.classList.remove('show');
+            resultBox.classList.add('show', 'error');
+            resultBox.innerHTML = `<strong>Error:</strong><pre>${error.message}</pre>`;
+        }
+    });
+        
+           
+        document.getElementById('mongodbForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const loading = document.getElementById('mongodbLoading');
+            const resultBox = document.getElementById('mongodbResult');
+            
+            loading.classList.add('show');
+            resultBox.classList.remove('show');
+
+            const formData = new FormData(this);
+            const operation = formData.get('mongodb_operation');
+            const fileInput = this.querySelector('input[type="file"][name="mongodb_file"]');
+            const hasFile = fileInput && fileInput.files.length > 0;
+
+            try {
+                let response;
+                if (operation === 'bulk' && hasFile) {
+                    // Send as multipart/form-data for file upload
+                    response = await fetch('/mongodb', {
+                        method: 'POST',
+                        body: formData
+                    });
+                } else {
+                    // Send as JSON for other operations
+                    const data = {};
+                    formData.forEach((value, key) => {
+                        if (value instanceof File) {
+                            return; // Skip files in JSON mode
+                        }
+                        data[key] = value;
+                    });
+                    response = await fetch('/mongodb', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                }
+                const result = await response.text();
+                
+                loading.classList.remove('show');
+                resultBox.classList.add('show');
+                resultBox.className = 'result-box show ' + (result.includes('Error') || result.includes('Traceback') ? 'error' : 'success');
+                resultBox.innerHTML = `<strong>Result:</strong><pre>${result}</pre>`;
+            } catch (error) {
+                loading.classList.remove('show');
+                resultBox.classList.add('show', 'error');
+                resultBox.innerHTML = `<strong>Error:</strong><pre>${error.message}</pre>`;
+            }
+        });
+
+        document.getElementById('cassandraForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const loading = document.getElementById('cassandraLoading');
+            const resultBox = document.getElementById('cassandraResult');
+            
+            loading.classList.add('show');
+            resultBox.classList.remove('show');
+
+            const formData = new FormData(this);
+            const operation = formData.get('cassandra_operation');
+            const fileInput = this.querySelector('input[type="file"][name="cassandra_file"]');
+            const hasFile = fileInput && fileInput.files.length > 0;
+
+            try {
+                let response;
+                if (operation === 'bulk' && hasFile) {
+                    // Send as multipart/form-data for file upload
+                    response = await fetch('/cassandra', {
+                        method: 'POST',
+                        body: formData
+                    });
+                } else {
+                    // Send as JSON for other operations
+                    const data = {};
+                    formData.forEach((value, key) => {
+                        if (value instanceof File) {
+                            return; // Skip files in JSON mode
+                        }
+                        data[key] = value;
+                    });
+                    response = await fetch('/cassandra', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                }
+                const result = await response.text();
+                
+                loading.classList.remove('show');
+                resultBox.classList.add('show');
+                resultBox.className = 'result-box show ' + (result.includes('Error') || result.includes('Traceback') ? 'error' : 'success');
+                resultBox.innerHTML = `<strong>Result:</strong><pre>${result}</pre>`;
+            } catch (error) {
+                loading.classList.remove('show');
+                resultBox.classList.add('show', 'error');
+                resultBox.innerHTML = `<strong>Error:</strong><pre>${error.message}</pre>`;
+            }
+        });
+    </script>
+</body>
+</html>
