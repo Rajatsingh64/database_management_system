@@ -1,7 +1,5 @@
 <div align="center">
 
-# 🗄️ Database Management System
-
 ### 🚀 One Platform • Three Databases • Unlimited Possibilities
 
 <img src="assets/demo.gif" width="100%" alt="Application Demo"/>
@@ -46,20 +44,6 @@ This application provides a unified web interface where users can:
 ✅ Download Data
 
 ✅ Manage Multiple Databases
-
-All from one responsive and modern web application.
-
----
-
-# 🎥 Application Demo
-
-
-
-```text
-assets/demo.gif
-```
-
-<img src="assets/demo.gif" alt="Demo"/>
 
 ---
 # 🛠️ Technology Stack
