@@ -1,8 +1,8 @@
 <div align="center">
 
-### 🚀 One Platform • Three Databases • Unlimited Possibilities
+<img src="assets/demo.gif" width="96%" alt="Application Demo"/>
 
-<img src="assets/demo.gif" width="100%" alt="Application Demo"/>
+### 🚀 One Platform • Three Databases • Unlimited Possibilities
 
 <br>
 
